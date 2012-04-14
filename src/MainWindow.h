@@ -127,6 +127,7 @@ class AMAROK_EXPORT MainWindow : public KMainWindow
         void setLayoutLocked( bool locked );
         void showAbout();
         void showReportBug();
+        void currentTrackPlaying( Meta::TrackPtr track );
 
     private slots:
         void slotStopped();

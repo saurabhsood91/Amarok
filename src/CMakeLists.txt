@@ -750,6 +750,7 @@ set(amaroklib_LIB_SRCS
     GlobalCollectionActions.cpp
     GlobalCurrentTrackActions.cpp
     moodbar/MoodbarManager.cpp
+    CTrack.cpp
     ../shared/FileType.cpp
 )
 
@@ -932,6 +933,7 @@ target_link_libraries(amaroklib
     ${QT_QTSQL_LIBRARY}
     ${CMAKE_THREAD_LIBS_INIT}
     ${EXTRA_LIBS}
+    ${QT_QTDECLARATIVE_LIBRARY}
     amarokpud
     amarokcore
     amarokocsclient

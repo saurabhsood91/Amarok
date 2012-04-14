@@ -64,6 +64,7 @@
 #include "toolbar/MainToolbar.h"
 #include "SvgHandler.h"
 #include "PluginManager.h"
+#include "CTrack.h"
 //#include "mediabrowser.h"
 
 #include <KAction>          //m_actionCollection
@@ -90,7 +91,10 @@
 #include <QList>
 #include <QStyle>
 #include <QVBoxLayout>
-
+#include <QDebug>
+#include <QDeclarativeView>
+#include <QtDeclarative/QDeclarativeContext>
+#include <QtDeclarative/QDeclarativeView>
 #include <iostream>
 
 #ifdef Q_WS_X11
@@ -171,8 +175,25 @@ MainWindow::MainWindow()
              this, SLOT( slotNewTrackPlaying() ) );
     connect( engine, SIGNAL( trackMetadataChanged( Meta::TrackPtr ) ),
              this, SLOT( slotMetadataChanged( Meta::TrackPtr ) ) );
+    connect( engine, SIGNAL( trackPlaying( Meta::TrackPtr ) ),
+			 this, SLOT( currentTrackPlaying( Meta::TrackPtr  ) ) );
 
     KGlobal::locale()->insertCatalog( "libplasma" );
+}
+
+void
+MainWindow::currentTrackPlaying( Meta::TrackPtr track )
+{
+	CTrack ct( track.data()->prettyName(), track.data()->artist()->prettyName() );
+	QWidget *w = new QWidget;
+	QHBoxLayout *layout = new QHBoxLayout;
+	w->setLayout( layout );
+	QDeclarativeView *view = new QDeclarativeView;
+	QDeclarativeContext *ctxt = view->rootContext();
+	ctxt->setContextProperty( "currentModel" , &ct );
+	view->setSource( QUrl::fromLocalFile( "/home/saurabh/kde/src/amarok/src/current.qml" ) );
+	layout->addWidget( view );
+	w->show();
 }
 
 MainWindow::~MainWindow()
