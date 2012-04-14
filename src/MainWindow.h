@@ -23,11 +23,15 @@
 #include "amarok_export.h"
 #include "core/meta/Meta.h"
 #include "browsers/BrowserDock.h"
+#include "CTrack.h"
 
 #include <KMainWindow>
 #include <KVBox>
 #include <Phonon/Global>
 #include <Phonon/Global>
+#include <QtDeclarative/QDeclarativeContext>
+#include <QtDeclarative/QDeclarativeView>
+#include <QWidget>
 
 #include <QWeakPointer>
 
@@ -185,6 +189,11 @@ class AMAROK_EXPORT MainWindow : public KMainWindow
         QWeakPointer<KMenu>     m_toolsMenu;
         QWeakPointer<KMenu>     m_settingsMenu;
         QWeakPointer<BrowserDock> m_browserDock;
+        QWidget *w;
+        QHBoxLayout *hLayout;
+        QDeclarativeView *view;
+        QDeclarativeContext *ctxt;
+        CTrack ct;
 #ifdef DEBUG_BUILD_TYPE
         QWeakPointer<NetworkAccessViewer> m_networkViewer;
 #endif // DEBUG_BUILD_TYPE

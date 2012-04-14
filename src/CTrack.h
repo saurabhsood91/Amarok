@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QStringList>
 #include <QAbstractListModel>
+#include <QDebug>
 
 class CTrack : public QAbstractListModel
 {
@@ -17,8 +18,10 @@ class CTrack : public QAbstractListModel
 			ArtistRole
 		};
 		CTrack( QString trackName,QString artistName );
+		CTrack();
 		int rowCount( const QModelIndex &parent = QModelIndex() ) const;
 		QVariant data( const QModelIndex &parent,int role=Qt::DisplayRole ) const;
+		void setDetails( QString trackName, QString artistName );
 	private:
 		QStringList trackDetails;
 };

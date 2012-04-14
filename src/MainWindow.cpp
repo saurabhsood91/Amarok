@@ -64,7 +64,6 @@
 #include "toolbar/MainToolbar.h"
 #include "SvgHandler.h"
 #include "PluginManager.h"
-#include "CTrack.h"
 //#include "mediabrowser.h"
 
 #include <KAction>          //m_actionCollection
@@ -93,8 +92,6 @@
 #include <QVBoxLayout>
 #include <QDebug>
 #include <QDeclarativeView>
-#include <QtDeclarative/QDeclarativeContext>
-#include <QtDeclarative/QDeclarativeView>
 #include <iostream>
 
 #ifdef Q_WS_X11
@@ -179,20 +176,29 @@ MainWindow::MainWindow()
 			 this, SLOT( currentTrackPlaying( Meta::TrackPtr  ) ) );
 
     KGlobal::locale()->insertCatalog( "libplasma" );
+    w = new QWidget;
+    hLayout = new QHBoxLayout;
+    w->setLayout( hLayout );
+    view = new QDeclarativeView;
+    ctxt = view->rootContext();
+    hLayout->addWidget( view );
 }
 
 void
 MainWindow::currentTrackPlaying( Meta::TrackPtr track )
 {
-	CTrack ct( track.data()->prettyName(), track.data()->artist()->prettyName() );
-	QWidget *w = new QWidget;
-	QHBoxLayout *layout = new QHBoxLayout;
-	w->setLayout( layout );
-	QDeclarativeView *view = new QDeclarativeView;
-	QDeclarativeContext *ctxt = view->rootContext();
-	ctxt->setContextProperty( "currentModel" , &ct );
-	view->setSource( QUrl::fromLocalFile( "/home/saurabh/kde/src/amarok/src/current.qml" ) );
-	layout->addWidget( view );
+	//CTrack ct( track.data()->prettyName(), track.data()->artist()->prettyName() );
+	
+	
+	
+	//QDeclarativeView *view = new QDeclarativeView;
+	//QDeclarativeContext *ctxt = view->rootContext();
+	//ctxt->setContextProperty( "currentModel" , &ct );
+	//view->setSource( QUrl::fromLocalFile( "/home/saurabh/kde/src/amarok/src/current.qml" ) );
+	//layout->addWidget( view );
+	ct.setDetails( track.data()->prettyName(), track.data()->artist()->prettyName() );
+    ctxt->setContextProperty( "currentModel", &ct);
+    view->setSource( QUrl::fromLocalFile( "/home/saurabh/kde/src/amarok/src/current.qml" ) );
 	w->show();
 }
 
