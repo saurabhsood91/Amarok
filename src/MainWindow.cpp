@@ -182,6 +182,7 @@ MainWindow::MainWindow()
     view = new QDeclarativeView;
     ctxt = view->rootContext();
     hLayout->addWidget( view );
+    currentList.append( new CurrentTrackModel() );
 }
 
 void
@@ -196,9 +197,11 @@ MainWindow::currentTrackPlaying( Meta::TrackPtr track )
 	//ctxt->setContextProperty( "currentModel" , &ct );
 	//view->setSource( QUrl::fromLocalFile( "/home/saurabh/kde/src/amarok/src/current.qml" ) );
 	//layout->addWidget( view );
-	ct.setDetails( track.data()->prettyName(), track.data()->artist()->prettyName() );
-    ctxt->setContextProperty( "currentModel", &ct);
-    view->setSource( QUrl::fromLocalFile( "/home/saurabh/kde/src/amarok/src/current.qml" ) );
+	//ct.setDetails( track.data()->prettyName(), track.data()->artist()->prettyName() );
+    currentList[ 0 ]->setProperty( "trackName", track.data()->prettyName() );
+    currentList[ 0 ]->setProperty( "artistName", track.data()->artist()->prettyName() );
+    ctxt->setContextProperty( "currentModel", QVariant::fromValue( currentList) );
+    view->setSource( QUrl( "/home/saurabh/kde/src/amarok/src/current.qml" ) );
 	w->show();
 }
 

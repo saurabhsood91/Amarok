@@ -24,6 +24,7 @@
 #include "core/meta/Meta.h"
 #include "browsers/BrowserDock.h"
 #include "CTrack.h"
+#include "CurrentTrack.h"
 
 #include <KMainWindow>
 #include <KVBox>
@@ -194,6 +195,7 @@ class AMAROK_EXPORT MainWindow : public KMainWindow
         QDeclarativeView *view;
         QDeclarativeContext *ctxt;
         CTrack ct;
+        QList< QObject * > currentList;
 #ifdef DEBUG_BUILD_TYPE
         QWeakPointer<NetworkAccessViewer> m_networkViewer;
 #endif // DEBUG_BUILD_TYPE
