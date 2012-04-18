@@ -190,12 +190,11 @@ class AMAROK_EXPORT MainWindow : public KMainWindow
         QWeakPointer<KMenu>     m_toolsMenu;
         QWeakPointer<KMenu>     m_settingsMenu;
         QWeakPointer<BrowserDock> m_browserDock;
-        QWidget *w;
+        QWidget *win;
         QHBoxLayout *hLayout;
         QDeclarativeView *view;
         QDeclarativeContext *ctxt;
-        CTrack ct;
-        QList< QObject * > currentList;
+        CurrentTrackModel currentModel;
 #ifdef DEBUG_BUILD_TYPE
         QWeakPointer<NetworkAccessViewer> m_networkViewer;
 #endif // DEBUG_BUILD_TYPE
